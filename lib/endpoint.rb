@@ -1,6 +1,7 @@
 require 'sinatra'
-require "net/http"
-require "uri"
+require 'net/http'
+require 'robot'
+require 'sms'
 
 get '/' do
   "Hello World! I'm the grocery bot."
@@ -34,44 +35,13 @@ get '/talk' do
   message = params['text']
   puts "#{sender} says #{message}"
 
+  reply = Robot.new.reply_to(message)
 
-  reply = parse_text(message)
   if ENV['RACK_ENV'] == 'production'
-    response = reply_via_sms(sender, reply)
+    response = Sms.send(sender, reply).body
   else
     response = reply
   end
 
   "OK\n#{params}\n#{response}"
-end
-
-def parse_text(text)
-  # separators ,.:;|
-  if text =~ /\bneed\b(.+)|\badd\b(.+)/i
-    'OK, added.'
-    # TODO parse and update db
-  elsif text =~ /\bremove\b(.+)/i
-    'OK, removed.'
-    # TODO parse and update db
-  elsif text =~ /\bclear list\b/i
-    'Your list is empty.'
-    # TODO parse and update db
-  elsif text =~ /\blist\b|\bshow\b/i
-    'Here\'s what you need so far:'
-    # TODO enumerate
-  else
-    'Hmm. I didn\'t quite get that. Use "add" or "remove" or "list".'
-  end
-end
-
-def reply_via_sms(to, message)
-  uri = URI.parse("https://rest.nexmo.com/sms/json")
-  params = {
-      'api_key' => ENV['NEXMO_API_KEY'],
-      'api_secret' => ENV['NEXMO_API_SECRET'],
-      'to' => to,
-      'from' => ENV['NEXMO_NUMBER'],
-      'text': message
-  }
-  Net::HTTP.post_form(uri, params).body
 end
