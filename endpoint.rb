@@ -36,7 +36,11 @@ get '/talk' do
 
 
   reply = parse_text(message)
-  response = reply_via_sms(sender, reply)
+  if ENV['RACK_ENV'] == 'production'
+    response = reply_via_sms(sender, reply)
+  else
+    response = reply
+  end
 
   "OK\n#{params}\n#{response}"
 end
