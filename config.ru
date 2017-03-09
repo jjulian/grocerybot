@@ -1,4 +1,3 @@
-require './endpoint'
+require 'endpoint'
 
 run Sinatra::Application
-
