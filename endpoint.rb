@@ -47,20 +47,20 @@ end
 
 def parse_text(text)
   # separators ,.:;|
-  if text =~ /\bneed\b(.+)|\badd\b(.+)/
+  if text =~ /\bneed\b(.+)|\badd\b(.+)/i
     'OK, added.'
     # TODO parse and update db
-  elsif text =~ /\bremove\b(.+)/
+  elsif text =~ /\bremove\b(.+)/i
     'OK, removed.'
     # TODO parse and update db
-  elsif text =~ /\bclear\b|\bdone\b/
+  elsif text =~ /\bclear list\b/i
     'Your list is empty.'
     # TODO parse and update db
-  elsif text =~ /\blist\b|\bshow\b/
+  elsif text =~ /\blist\b|\bshow\b/i
     'Here\'s what you need so far:'
     # TODO enumerate
   else
-    'Hmm. I didn\'t quite get that. Use "need" or "remove" or "list".'
+    'Hmm. I didn\'t quite get that. Use "add" or "remove" or "list".'
   end
 end
 
