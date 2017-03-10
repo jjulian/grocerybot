@@ -68,10 +68,10 @@ class Robot
       Operation::ADD
     elsif text =~ /\bremove\b/i
       Operation::REMOVE
-    elsif text =~ /\blist\b|\bshow\b/i
-      Operation::LIST
     elsif text =~ /\bclear list\b/i
       Operation::REMOVE_ALL
+    elsif text =~ /\blist\b|\bshow\b/i
+      Operation::LIST
     else
       Operation::UNKNOWN
     end
