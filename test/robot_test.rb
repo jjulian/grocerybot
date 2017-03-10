@@ -22,6 +22,8 @@ class RobotTest < Test::Unit::TestCase
   def test_items_parsing
     items = @subject.parse_items_from("add chips")
     assert_equal(['chips'], items)
+    items = @subject.parse_items_from("Add chips")
+    assert_equal(['chips'], items)
     items = @subject.parse_items_from("add chips, cookies")
     assert_equal(['chips','cookies'], items)
     items = @subject.parse_items_from("add chips,cookies")

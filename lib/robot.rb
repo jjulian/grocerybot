@@ -58,7 +58,7 @@ class Robot
   def parse_items_from(text)
     words = text.split(' ')
     # drop all words up to and including a keyword
-    items_str = words.reverse.take_while { |w| !KEYWORDS.include?(w) }.reverse.join(' ')
+    items_str = words.reverse.take_while { |w| !KEYWORDS.include?(w.downcase) }.reverse.join(' ')
     # split the remaining words on punctuation
     items_str.split(SEPARATORS_REGEX).map { |item| item.strip }
   end
