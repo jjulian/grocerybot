@@ -17,7 +17,9 @@ namespace :db do
   task :migrate do
     ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || db_config)
     ActiveRecord::Migrator.migrate("db/migrate/")
-    Rake::Task["db:schema"].invoke
+    unless ENV['RACK_ENV'] == 'production'
+      Rake::Task["db:schema"].invoke
+    end
     puts "Database migrated."
   end
 
