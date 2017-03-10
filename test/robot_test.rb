@@ -4,7 +4,7 @@ require 'robot'
 class RobotTest < Test::Unit::TestCase
 
   def setup
-    @subject = Robot.new
+    @subject = Robot.new(creator: '14445556666')
   end
 
   def test_add_operation_parsing

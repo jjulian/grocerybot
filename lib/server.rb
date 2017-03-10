@@ -4,6 +4,11 @@ require 'robot'
 require 'sms'
 require 'json'
 
+require 'active_record'
+ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || YAML::load(File.open('config/database.yml')))
+require 'models/item'
+
+
 get '/' do
   "Hello World! I'm the grocery bot."
 end
@@ -36,7 +41,7 @@ get '/talk' do
   message = params['text']
   puts "#{sender} says #{message}"
 
-  reply = Robot.new.reply_to(message)
+  reply = Robot.new(creator: sender).reply_to(message)
 
   if ENV['RACK_ENV'] == 'production'
     response = Sms.send(sender, reply).body
