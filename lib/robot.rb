@@ -46,7 +46,11 @@ class Robot
 
     when Operation::LIST
       item_names = Item.still_needed.map { |item| item.name }.join("\n")
-      "Here\'s your grocery list:\n#{item_names}"
+      if item_names.empty?
+        "Empty list."
+      else
+        "Here\'s your grocery list:\n#{item_names}"
+      end
     else
       'Hmm. I didn\'t quite get that. I can "add <item>" or "remove <item>" or "list".'
     end
