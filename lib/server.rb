@@ -2,6 +2,7 @@ require 'sinatra'
 require 'net/http'
 require 'robot'
 require 'sms'
+require 'json'
 
 get '/' do
   "Hello World! I'm the grocery bot."
@@ -43,7 +44,7 @@ get '/talk' do
     response = reply
   end
 
-  # TODO log this request
+  puts params.merge({reply: reply}).to_json
 
   "OK\n#{params}\n#{response}"
 end
