@@ -1,3 +1,3 @@
-require 'endpoint'
+require 'server'
 
 run Sinatra::Application

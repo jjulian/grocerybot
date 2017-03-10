@@ -43,5 +43,7 @@ get '/talk' do
     response = reply
   end
 
+  # TODO log this request
+
   "OK\n#{params}\n#{response}"
 end
